@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banking System</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+
+<body>
+    <div class="container">
+        <h1>Basic Banking System</h1>
+        <form onsubmit="handleSubmit(event)">
+            <div class="input-group">
+                <label for="name">Account Holder Name</label>
+                <input type="text" id="name" placeholder="Enter your name" required />
+            </div>
+
+            <div class="input-group">
+                <label for="account">Account Number</label>
+                <input type="number" id="account" placeholder="Enter account number" required />
+            </div>
+
+            <div class="input-group">
+                <label for="deposit">Deposit Amount</label>
+                <input type="number" id="deposit" placeholder="Enter amount to deposit" />
+            </div>
+
+            <div class="input-group">
+                <label for="withdraw">Withdraw Amount</label>
+                <input type="number" id="withdraw" placeholder="Enter amount to withdraw" />
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="output">
+            <h3>Account Summary</h3>
+            <p><strong>Name:</strong> <span id="displayName">-</span></p>
+            <p><strong>Account Number:</strong> <span id="displayAccount">-</span></p>
+            <p><strong>Balance:</strong> ₹<span id="balance">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        let currentBalance = 0;
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const account = document.getElementById("account").value;
+            const deposit = parseFloat(document.getElementById("deposit").value) || 0;
+            const withdraw = parseFloat(document.getElementById("withdraw").value) || 0;
+            currentBalance += deposit;
+            if (withdraw <= currentBalance) {
+                currentBalance -= withdraw;
+            } else {
+                alert("Insufficient balance for withdrawal.");
+                return;
+            }
+
+            document.getElementById("displayName").innerText = name;
+            document.getElementById("displayAccount").innerText = account;
+            document.getElementById("balance").innerText = currentBalance.toFixed(2);
+            document.getElementById("deposit").value = "";
+            document.getElementById("withdraw").value = "";
+        }
+    </script>
+</body>
+
+</html>
